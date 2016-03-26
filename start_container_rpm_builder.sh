@@ -7,8 +7,9 @@ then
 	echo "Starting Container $DOCKER_CONTAINER_NAME"
 	docker run -it -v `pwd`:/build  --name rpm_builder summernguyen/rpm-builder /bin/bash
 else
-	if [ $DOCKER_CONTAINER_STATUS="false " ];
+	if [ $DOCKER_CONTAINER_STATUS = "false" ];
 	then
+		echo "Container is now starting."
 		docker start $DOCKER_CONTAINER_NAME
 	fi
 
