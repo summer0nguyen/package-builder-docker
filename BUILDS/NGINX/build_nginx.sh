@@ -2,8 +2,10 @@ yum -y install  pcre pcre-devel  rsyslog zip unzip gcc gcc-c++ openssl openssl-d
 
 
 
+##########################################
+##########Compile Nginx with options######
+##########################################
 
-#Compile Nginx with options
 
 NGINX_RELEASE_VERSION="1.8.1"
 OWNER_RELEASE_TIME="1"
@@ -29,7 +31,12 @@ chmod +x /etc/init.d/nginx
 #Compile DONE, you should check if Nginx is starting OK
 
 
-#Prepare to Build RPM
+
+##############################################
+#			Prepare to Build RPM             #
+##############################################
+
+
 mkdir -p /tmp/builder/nginx/build
 
 cd /tmp/builder/nginx/build
@@ -42,12 +49,16 @@ rsync -avz /usr/local/lib64/perl5/auto/nginx/. usr/local/lib64/perl5/auto/nginx/
 rsync -avz /usr/local/lib64/perl5/nginx.pm usr/local/lib64/perl5/nginx.pm
 
 
-
-#Build RPM
+##############################################
+#			    Build RPM                    #
+##############################################
 
 fpm -s dir -t rpm -n nginx -v ${VERSION} -p nginx-VERSION.rpm --url "http://summernguyen.net" --description "Nginx ${VERSION}" --vendor "Summer Nguyen" -d pcre -d pcre-devel  -d zip -d unzip -d gcc -d gcc-c++ -d openssl -d openssl-devel -d zlib -d gd -d freetype -d freetype-devel -d autoconf -d openldap -d openldap-devel -d bzip2-devel -d libpng -d libpng-devel -d libjpeg -d libjpeg-devel -d perl-ExtUtils-Embed  usr etc var
 
 cp nginx-${VERSION}.rpm /build/RPMS
-#Delete Build Folder
 
+##############################################
+#			    Clean everything                    #
+##############################################
 rm -rf usr etc var 
+rm -rfv /tmp/builder/nginx/build
